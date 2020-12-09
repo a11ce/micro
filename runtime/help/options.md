@@ -260,6 +260,10 @@ Here are the available options:
 
     default value: `underline`
 
+* `matchbracehighlight`: highlight matching braces instead of underlining them.
+
+    default value: `false`
+
 * `mkparents`: if a file is opened on a path that does not exist, the file
    cannot be saved because the parent directories don't exist. This option lets
    micro automatically create the parent directories in such a situation.
@@ -592,6 +596,7 @@ so that you can see what the formatting should look like.
     "linter": true,
     "literate": true,
     "matchbrace": true,
+    "matchbracehighlight": false,
     "matchbraceleft": true,
     "matchbracestyle": "underline",
     "mkparents": false,
