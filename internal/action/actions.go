@@ -1166,7 +1166,7 @@ func (h *BufPane) paste(clip string) {
 	if h.Buf.Settings["smartpaste"].(bool) {
 		if h.Cursor.X > 0 && len(util.GetLeadingWhitespace([]byte(strings.TrimLeft(clip, "\r\n")))) == 0 {
 			leadingWS := util.GetLeadingWhitespace(h.Buf.LineBytes(h.Cursor.Y))
-			clip = strings.Replace(clip, "\n", "\n"+string(leadingWS), -1)
+			clip = strings.ReplaceAll(clip, "\n", "\n"+string(leadingWS))
 		}
 	}
 
@@ -1195,6 +1195,7 @@ func (h *BufPane) JumpToMatchingBrace() bool {
 				} else {
 					h.Cursor.GotoLoc(matchingBrace.Move(1, h.Buf))
 				}
+				break
 			} else {
 				return false
 			}
@@ -1348,10 +1349,8 @@ func (h *BufPane) HalfPageDown() bool {
 	v := h.GetView()
 	if h.Buf.LinesNum()-(v.StartLine+v.Height) > v.Height/2 {
 		h.ScrollDown(v.Height / 2)
-	} else {
-		if h.Buf.LinesNum() >= v.Height {
-			v.StartLine = h.Buf.LinesNum() - v.Height
-		}
+	} else if h.Buf.LinesNum() >= v.Height {
+		v.StartLine = h.Buf.LinesNum() - v.Height
 	}
 	h.SetView(v)
 	return true
